@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import giuliasilvestrini.GestioneDispositivi.service.DeviceService;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.UUID;
 
 @RestController
@@ -47,4 +49,9 @@ public class DeviceController {
     public void deleteDevice(@PathVariable UUID id) {
         deviceService.findByIdAndDelete(id);
     }
+
+
+
+
+
 }

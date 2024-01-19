@@ -1,5 +1,7 @@
 package giuliasilvestrini.GestioneDispositivi.service;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import giuliasilvestrini.GestioneDispositivi.entities.User;
 import giuliasilvestrini.GestioneDispositivi.exceptions.NotFoundException;
 import giuliasilvestrini.GestioneDispositivi.payloads.NewUser;
@@ -10,13 +12,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import giuliasilvestrini.GestioneDispositivi.repositories.UserDAO;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.UUID;
 
 @Service
 public class UserService {
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private Cloudinary cloudinaryUploader;
 
 
     public Page<User> getUsers(int page, int size, String sort) {
@@ -35,7 +41,7 @@ public class UserService {
         newUser.setUsername(body.getUsername());
         newUser.setName(body.getName());
         newUser.setSurname(body.getSurname());
-                newUser.setEmail(body.getEmail());
+        newUser.setEmail(body.getEmail());
 
         return userDAO.save(newUser);
     }
@@ -50,9 +56,16 @@ public class UserService {
 
         return userDAO.save(found);
     }
+
     public void findByIdAndDelete(UUID id) {
         User userFound = this.findById(id);
         userDAO.delete(userFound);
     }
 
+    public String uploadProfile(MultipartFile file) throws IOException {
+        String url = (String) cloudinaryUploader.uploader()
+                .upload(file.getBytes(), ObjectUtils.emptyMap())
+                .get("url");
+        return url;
+    }
 }
