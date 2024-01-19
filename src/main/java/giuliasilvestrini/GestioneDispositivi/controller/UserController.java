@@ -51,10 +51,10 @@ public class UserController {
         userService.findByIdAndDelete(id);
     }
 
-// upload non completo
-    @PostMapping ("/{id}/upload")
-    public String uploadProfilePic (@RequestParam ("profile") MultipartFile file, @PathVariable UUID id) throws IOException {
-        return userService.uploadProfile(file);
-
-    }
+//// upload non completo
+//    @PostMapping ("/{id}/upload")
+//    public String uploadProfilePic (@RequestParam ("profile") MultipartFile file, @PathVariable UUID id) throws IOException {
+//        return userService.uploadProfile(file);
+//
+//    }
 }

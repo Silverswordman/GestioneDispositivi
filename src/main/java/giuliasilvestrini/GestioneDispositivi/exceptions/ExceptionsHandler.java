@@ -31,10 +31,9 @@ public class ExceptionsHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    // Tutti gli altri tipi di eccezioni (come errori vari nel codice) verranno gestiti da questo metodo
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // Dovrà rispondere con un 500
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorsPayload handleGenericError(Exception ex) {
         ex.printStackTrace();
-        return new ErrorsPayload("Problema lato server! Giuro che risolveremo presto!", LocalDateTime.now());
+        return new ErrorsPayload("Problema lato server", LocalDateTime.now());
     }
 }
