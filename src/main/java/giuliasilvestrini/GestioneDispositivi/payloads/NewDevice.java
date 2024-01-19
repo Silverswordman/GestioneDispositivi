@@ -10,6 +10,5 @@ import java.util.UUID;
 public class NewDevice {
 
     private UUID id;
-
     private DeviceType deviceType;
 }

@@ -42,46 +42,53 @@ public class DeviceService {
             User user = userService.findById(userId);
             newDevice.setUser(user);
 
-            newDevice.setDeviceState(getRandomDeviceState());
+            newDevice.setDeviceState(DeviceState.Unavailable);
         } else {
-            newDevice.setDeviceState(getRandomDeviceState2());
+            newDevice.setUser(null);
+            newDevice.setDeviceState(getRandomDeviceState());
         }
 
         return deviceDAO.save(newDevice);
     }
 
 
+    public Device findById(UUID id) {
+        return deviceDAO.findById(id).orElseThrow(() -> new NotFoundException(String.valueOf(id)));
+    }
 
-    // random per setting degli enum automatico
+
+    // random per lo stato del device mod
 
     private DeviceState getRandomDeviceState() {
         Random random = new Random();
-        DeviceState[] usedDevices = {DeviceState.Unavailable, DeviceState.Maintenance};
-        int x = random.nextInt(usedDevices.length);
-        return usedDevices[x];
-    }
-
-    private DeviceState getRandomDeviceState2() {
-        Random random = new Random();
-        DeviceState[] freeDevices = {DeviceState.Available, DeviceState.Out_Of_Order};
+        DeviceState[] freeDevices = {DeviceState.Available, DeviceState.Out_Of_Order, DeviceState.Maintenance};
         int x = random.nextInt(freeDevices.length);
         return freeDevices[x];
     }
 
-    public Device findById(UUID id) {
-        return deviceDAO.findById(id).orElseThrow(() -> new NotFoundException(String.valueOf(id)));
+
+    public Device findByIdAndUpdate(UUID id, NewDevice body) {
+        Device deviceFound = this.findById(id);
+        UUID userId = body.getId();
+
+        if (userId != null) {
+            User user = userService.findById(userId);
+            deviceFound.setUser(user);
+            deviceFound.setDeviceState(DeviceState.Unavailable);
+        } else {
+            deviceFound.setUser(null);
+            deviceFound.setDeviceState(getRandomDeviceState());
+        }
+
+        deviceFound.setDeviceType(body.getDeviceType());
+        return deviceDAO.save(deviceFound);
     }
+
 
     public void findByIdAndDelete(UUID id) {
         Device deviceFound = this.findById(id);
         deviceDAO.delete(deviceFound);
     }
 
-    public Device findByIdAndUpdate(UUID id, Device body) {
-
-        Device deviceFound = this.findById(id);
-        deviceFound.setDeviceType(body.getDeviceType());
-        return deviceDAO.save(deviceFound);
-    }
 
 }

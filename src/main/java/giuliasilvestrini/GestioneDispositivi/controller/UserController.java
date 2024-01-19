@@ -3,9 +3,12 @@ package giuliasilvestrini.GestioneDispositivi.controller;
 import giuliasilvestrini.GestioneDispositivi.entities.User;
 import giuliasilvestrini.GestioneDispositivi.payloads.NewUser;
 import giuliasilvestrini.GestioneDispositivi.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -31,8 +34,19 @@ public class UserController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public User saveUser(@RequestBody NewUser body) throws Exception {
+    public User saveUser(@RequestBody @Validated NewUser body, BindingResult validation) throws Exception {
         return userService.save(body);
+    }
+
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable UUID id, @RequestBody NewUser body) {
+        return userService.findByIdAndUpdate(id, body);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable UUID id) {
+        userService.findByIdAndDelete(id);
     }
 
 

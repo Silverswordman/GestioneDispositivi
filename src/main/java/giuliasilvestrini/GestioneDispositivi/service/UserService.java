@@ -31,12 +31,17 @@ public class UserService {
     }
 
     public User save(NewUser body) {
-        return userDAO.save(body);
+        User newUser = new User();
+        newUser.setUsername(body.getUsername());
+        newUser.setName(body.getName());
+        newUser.setSurname(body.getSurname());
+                newUser.setEmail(body.getEmail());
+
+        return userDAO.save(newUser);
     }
 
     public User findByIdAndUpdate(UUID id, NewUser body) {
         User found = this.findById(id);
-
         found.setUsername(body.getUsername());
         found.setName(body.getName());
         found.setSurname(body.getSurname());
@@ -44,6 +49,10 @@ public class UserService {
 
 
         return userDAO.save(found);
+    }
+    public void findByIdAndDelete(UUID id) {
+        User userFound = this.findById(id);
+        userDAO.delete(userFound);
     }
 
 }

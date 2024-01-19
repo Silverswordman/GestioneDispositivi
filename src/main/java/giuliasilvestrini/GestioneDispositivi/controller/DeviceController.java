@@ -32,9 +32,19 @@ public class DeviceController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Device saveDevice(@RequestBody @Validated  NewDevice body ) {
+    public Device saveDevice(@RequestBody NewDevice body) {
         return deviceService.save(body);
     }
 
 
+    @PutMapping("/{id}")
+    public Device updateDevice(@PathVariable UUID id, @RequestBody  NewDevice body) {
+        return deviceService.findByIdAndUpdate(id, body);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteDevice(@PathVariable UUID id) {
+        deviceService.findByIdAndDelete(id);
+    }
 }
