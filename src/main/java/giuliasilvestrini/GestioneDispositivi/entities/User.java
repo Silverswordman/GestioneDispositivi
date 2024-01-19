@@ -1,7 +1,6 @@
 package giuliasilvestrini.GestioneDispositivi.entities;
 
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -26,6 +25,7 @@ public class User {
     private String surname;
     private String email;
     //    private String avatarURL;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     @JsonIgnore

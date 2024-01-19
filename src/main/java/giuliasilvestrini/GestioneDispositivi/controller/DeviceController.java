@@ -5,6 +5,7 @@ import giuliasilvestrini.GestioneDispositivi.payloads.NewDevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import giuliasilvestrini.GestioneDispositivi.service.DeviceService;
 
@@ -31,7 +32,7 @@ public class DeviceController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Device saveDevice(@RequestBody NewDevice body ) {
+    public Device saveDevice(@RequestBody @Validated  NewDevice body ) {
         return deviceService.save(body);
     }
 

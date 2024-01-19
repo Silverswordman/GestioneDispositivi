@@ -22,6 +22,7 @@ public class UserService {
     public Page<User> getUsers(int page, int size, String sort) {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+
         return userDAO.findAll(pageable);
     }
 
@@ -29,7 +30,7 @@ public class UserService {
         return userDAO.findById(id).orElseThrow(() -> new NotFoundException(String.valueOf(id)));
     }
 
-    public User save(User body) {
+    public User save(NewUser body) {
         return userDAO.save(body);
     }
 

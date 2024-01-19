@@ -1,6 +1,7 @@
 package giuliasilvestrini.GestioneDispositivi.controller;
 
 import giuliasilvestrini.GestioneDispositivi.entities.User;
+import giuliasilvestrini.GestioneDispositivi.payloads.NewUser;
 import giuliasilvestrini.GestioneDispositivi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +19,8 @@ public class UserController {
 
     @GetMapping("")
     public Page<User> getUsers(@RequestParam(defaultValue = "0") int page,
-                               @RequestParam(defaultValue = "15") int size, @RequestParam(defaultValue = "surname") String sortBy) {
+                               @RequestParam(defaultValue = "15") int size, @RequestParam(defaultValue = "surname") String sortBy)
+    {
         return userService.getUsers(page, size, sortBy);
     }
 
@@ -29,7 +31,9 @@ public class UserController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public User saveUser(@RequestBody User body) throws Exception {
+    public User saveUser(@RequestBody NewUser body) throws Exception {
         return userService.save(body);
     }
+
+
 }
