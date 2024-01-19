@@ -24,6 +24,7 @@ public class Device {
 
     @Enumerated(EnumType.STRING)
     private DeviceState deviceState;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
