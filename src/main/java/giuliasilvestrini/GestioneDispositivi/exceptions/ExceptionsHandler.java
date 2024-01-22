@@ -36,4 +36,10 @@ public class ExceptionsHandler {
         ex.printStackTrace();
         return new ErrorsPayload("Problema lato server", LocalDateTime.now());
     }
+
+    @ExceptionHandler(UnathorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED) // 401
+    public ErrorsPayload handleUnauthorized(UnathorizedException e) {
+        return new ErrorsPayload(e.getMessage(), LocalDateTime.now());
+    }
 }

@@ -68,4 +68,9 @@ public class UserService {
                 .get("url");
         return url;
     }
+
+    public User findByEmail(String email) throws NotFoundException {
+        return userDAO.findByEmail(email).orElseThrow(() -> new NotFoundException("Utente con email " + email + " non trovata!"));
+    }
+
 }

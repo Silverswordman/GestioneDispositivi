@@ -24,7 +24,10 @@ public class User {
     private String name;
     private String surname;
     private String email;
-//    private String avatarURL;
+    @JsonIgnore
+    private String avatarURL;
+
+    private String password;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")

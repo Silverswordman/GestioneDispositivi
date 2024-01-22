@@ -12,4 +12,6 @@ public class NewUserResponse {
 
     private String email;
 
+    public NewUserResponse(UUID id) {
+    }
 }

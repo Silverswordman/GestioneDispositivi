@@ -17,14 +17,18 @@ public class NewUser {
     @NotBlank
     private String name;
 
-    @NotEmpty (message = "Surname cannot be empty, Il cognome è un campo obbligatorio")
+    @NotEmpty(message = "Surname cannot be empty, Il cognome è un campo obbligatorio")
     @NotBlank
     private String surname;
 
     @NotEmpty
     @NotBlank
-    @Email (message = "")
+    @Email(message = "")
     private String email;
 
+    @NotEmpty(message = "Password cannot be empty,La password è un campo obbligatorio!")
+    @NotBlank
+    @Size(min = 5, message = "La password deve avere minimo 5 caratteri!")
+    private String password;
 
 }
