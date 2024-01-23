@@ -2,6 +2,7 @@ package giuliasilvestrini.GestioneDispositivi.controller;
 
 import giuliasilvestrini.GestioneDispositivi.entities.User;
 import giuliasilvestrini.GestioneDispositivi.payloads.NewUser;
+import giuliasilvestrini.GestioneDispositivi.payloads.NewUserDTO;
 import giuliasilvestrini.GestioneDispositivi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,7 @@ public class UserController {
 
     @GetMapping("")
     public Page<User> getUsers(@RequestParam(defaultValue = "0") int page,
-                               @RequestParam(defaultValue = "15") int size, @RequestParam(defaultValue = "surname") String sortBy)
-    {
+                               @RequestParam(defaultValue = "15") int size, @RequestParam(defaultValue = "surname") String sortBy) {
         return userService.getUsers(page, size, sortBy);
     }
 
@@ -36,12 +36,12 @@ public class UserController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public User saveUser(@RequestBody @Validated NewUser body, BindingResult validation) throws Exception {
+    public User saveUser(@RequestBody @Validated NewUserDTO body, BindingResult validation) throws Exception {
         return userService.save(body);
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable UUID id, @RequestBody NewUser body) {
+    public User updateUser(@PathVariable UUID id, @RequestBody NewUserDTO body) {
         return userService.findByIdAndUpdate(id, body);
     }
 
