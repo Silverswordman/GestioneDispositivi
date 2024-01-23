@@ -3,6 +3,7 @@ package giuliasilvestrini.GestioneDispositivi.service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import giuliasilvestrini.GestioneDispositivi.entities.User;
+import giuliasilvestrini.GestioneDispositivi.exceptions.BadRequestException;
 import giuliasilvestrini.GestioneDispositivi.exceptions.NotFoundException;
 import giuliasilvestrini.GestioneDispositivi.payloads.NewUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,20 @@ public class UserService {
     }
 
     public User save(NewUserDTO body) {
-        User newUser = new User();
-        newUser.setUsername(body.username());
-        newUser.setName(body.name());
-        newUser.setSurname(body.surname());
-        newUser.setEmail(body.email());
-        newUser.setPassword(body.password());
+        // Verifico se l'email è già in uso
+		/*Optional<User> user = usersDAO.findByEmail(body.getEmail());
+		if(user.isPresent()) throw new RuntimeException();*/
 
+        userDAO.findByEmail(body.email()).ifPresent(user -> {
+            throw new BadRequestException("L'email " + user.getEmail() + " è già in uso!");
+        });
+
+        User newUser = new User();
+        newUser.setSurname(body.surname());
+        newUser.setName(body.name());
+        newUser.setEmail(body.email());
+        newUser.setUsername(body.username());
+        newUser.setPassword(body.password());
         return userDAO.save(newUser);
     }
 

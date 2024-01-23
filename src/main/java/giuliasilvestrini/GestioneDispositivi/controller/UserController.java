@@ -30,11 +30,11 @@ public class UserController {
         return userService.findById(id);
     }
 
-    @PostMapping("")
-    @ResponseStatus(HttpStatus.CREATED)
-    public User saveUser(@RequestBody @Validated NewUserDTO body, BindingResult validation) throws Exception {
-        return userService.save(body);
-    }
+//    @PostMapping("")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public User saveUser(@RequestBody @Validated NewUserDTO body, BindingResult validation) throws Exception {
+//        return userService.save(body);
+//    }
 
     @PutMapping("/{id}")
     public User updateUser(@PathVariable UUID id, @RequestBody NewUserDTO body) {
