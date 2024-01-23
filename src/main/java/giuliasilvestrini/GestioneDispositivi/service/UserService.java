@@ -4,7 +4,6 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import giuliasilvestrini.GestioneDispositivi.entities.User;
 import giuliasilvestrini.GestioneDispositivi.exceptions.NotFoundException;
-import giuliasilvestrini.GestioneDispositivi.payloads.NewUser;
 import giuliasilvestrini.GestioneDispositivi.payloads.NewUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,21 +38,22 @@ public class UserService {
 
     public User save(NewUserDTO body) {
         User newUser = new User();
-        newUser.setUsername(body.getUsername());
-        newUser.setName(body.getName());
-        newUser.setSurname(body.getSurname());
-        newUser.setEmail(body.getEmail());
+        newUser.setUsername(body.username());
+        newUser.setName(body.name());
+        newUser.setSurname(body.surname());
+        newUser.setEmail(body.email());
+        newUser.setPassword(body.password());
 
         return userDAO.save(newUser);
     }
 
     public User findByIdAndUpdate(UUID id, NewUserDTO body) {
         User found = this.findById(id);
-        found.setUsername(body.getUsername());
-        found.setName(body.getName());
-        found.setSurname(body.getSurname());
-        found.setEmail(body.getEmail());
-        found.setPassword(body.getPassword());
+        found.setUsername(body.username());
+        found.setName(body.name());
+        found.setSurname(body.surname());
+        found.setEmail(body.email());
+        found.setPassword(body.password());
 
 
         return userDAO.save(found);

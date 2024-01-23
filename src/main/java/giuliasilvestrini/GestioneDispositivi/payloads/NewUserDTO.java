@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
-@Getter
+
 public record NewUserDTO(
 
         @NotEmpty(message = "Username cannot be empty, Lo username è un campo obbligatorio")

@@ -29,7 +29,7 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public NewUserResponse createUser(@RequestBody @Validated NewUserDTO newUserPayload, BindingResult validation) {
+    public NewUserResponseDTO createUser(@RequestBody @Validated NewUserDTO newUserPayload, BindingResult validation) {
         System.out.println(validation);
         if (validation.hasErrors()) {
             System.out.println(validation.getAllErrors());
@@ -37,7 +37,7 @@ public class AuthController {
         } else {
             User newUser = userService.save(newUserPayload);
 
-            return new NewUserResponse(newUser.getId());
+            return new NewUserResponseDTO(newUser.getId(),newUser.getUsername());
         }
     }
 }
